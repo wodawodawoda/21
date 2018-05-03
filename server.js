@@ -57,6 +57,10 @@ userSchema.pre('save', function (next) {
 // create mongoose model 'User'
 const User = mongoose.model('User', userSchema);
 
+app.get('/', (req, res)=> {
+  res.send('Working')
+})
+
 app.post('/users', (req, res) => {
   // create new User model instance
 // KENNY USER
