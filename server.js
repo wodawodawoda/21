@@ -7,7 +7,7 @@ const fs = require('fs')
 
 
 //localhost port
-const port = 5000;
+const port = process.env.PORT || 5000;
 // create express app
 const app = express();
 
@@ -16,7 +16,7 @@ const server = http.Server(app);
 
 // Connetct MongoDB using Mongoose
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/kodilla21')
+mongoose.connect('mongodb://ds241869.mlab.com:41869/kodilla21')
 
 const Schema = mongoose.Schema
 
