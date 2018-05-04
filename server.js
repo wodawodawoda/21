@@ -1,9 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const http = require('http');
-const path = require('path');
-const fs = require('fs')
-
 
 
 //localhost port
@@ -16,7 +13,7 @@ const server = http.Server(app);
 
 // Connetct MongoDB using Mongoose
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://ds241869.mlab.com:41869/kodilla21')
+mongoose.connect('mongodb://localhost/kodilla21')
 
 const Schema = mongoose.Schema
 
@@ -54,13 +51,15 @@ userSchema.pre('save', function (next) {
   next();
 })
 
-// create mongoose model 'User'
+// Create mongoose model 'User'
 const User = mongoose.model('User', userSchema);
 
+// Homepage response
 app.get('/', (req, res)=> {
-  res.send('Working')
+  res.send('Homepage')
 })
 
+// Create example users in database
 app.post('/users', (req, res) => {
   // create new User model instance
 // KENNY USER
@@ -122,6 +121,8 @@ app.post('/users', (req, res) => {
   res.send('Dodano użytkowników do bazy danych');
 });
 
+
+// Get all users from database
 app.get('/users', async (req, res) => {
   // User.find({}, function (err, data) {
   //   if(err) throw err;
@@ -135,6 +136,7 @@ app.get('/users', async (req, res) => {
   }
 })
 
+// Get user by name
 app.get('/user/:name', async (req, res) => {
   const name = req.params.name;
   try {
@@ -145,7 +147,7 @@ app.get('/user/:name', async (req, res) => {
   }
 })
 
-
+// Change user pasword (search by name)
 app.post('/user/:name/:newpassword', async (req, res) => {
   const name = req.params.name;
   const newPassword = req.params.newpassword
@@ -159,6 +161,7 @@ app.post('/user/:name/:newpassword', async (req, res) => {
       })
 })
 
+// Delete user (search by name)
 app.delete('/user/:name', function(req, res) {
   const name = req.params.name;
   User.find({name: `${name}-boy`}, (err, user) => {
@@ -169,9 +172,6 @@ app.delete('/user/:name', function(req, res) {
   })
 
 })
-
-
-
 
 
 server.listen(port)
